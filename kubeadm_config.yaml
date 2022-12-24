@@ -1,0 +1,10 @@
+kind: InitConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+bootstrapTokens:
+- token: TOKEN
+---
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+apiServer:
+  certSANs:
+  - @@PUBLIC_IP_ADDRESS@@

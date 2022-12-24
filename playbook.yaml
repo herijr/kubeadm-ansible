@@ -2,7 +2,7 @@
 - name: Instalar e configurar o ContainerD
   hosts: all
   tasks:
-  - name: Instalacao dos moduloso do Kernel Linux
+  - name: Instalacao dos modulos do Kernel Linux
     ansible.builtin.copy:
       src: ./k8s.conf
       dest: /etc/modules-load.d/k8s.conf
@@ -93,8 +93,14 @@
   - name: Limpando instalacao existente
     command: kubeadm reset -f
 
+  - name: Copiando arquivo de configuracoes do cluster
+    ansible.builtin.copy:
+      src: ./kubeadm_config.yaml
+      dest: /etc/kubeadm_config.yaml
+      mode: '644'
+
   - name: Comando de inicializacao
-    command: kubeadm init
+    command: kubeadm init --config=/etc/kubeadm_config.yaml
 
   - name: Criacao do diretorio .kube
     file:
